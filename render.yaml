@@ -3,7 +3,7 @@ services:
     name: stockflow
     runtime: node
     plan: free
-    buildCommand: npm ci --prefix backend && npm ci --prefix frontend && npm run db:generate --prefix backend && npm run build --prefix frontend
+    buildCommand: npm ci --include=dev --prefix backend && npm ci --include=dev --prefix frontend && npm run db:generate --prefix backend && npm run build --prefix frontend
     startCommand: npm run db:push --prefix backend && npm start --prefix backend
     healthCheckPath: /health
     envVars:
