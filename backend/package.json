@@ -5,10 +5,12 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
+    "dev": "npm run db:generate:sqlite && npm run db:push:sqlite && nodemon src/index.js",
     "db:generate": "prisma generate",
+    "db:generate:sqlite": "prisma generate --schema prisma/schema.sqlite.prisma",
     "db:migrate": "prisma migrate dev --name init",
     "db:push": "prisma db push",
+    "db:push:sqlite": "prisma db push --schema prisma/schema.sqlite.prisma",
     "db:studio": "prisma studio"
   },
   "dependencies": {
@@ -25,4 +27,3 @@
     "prisma": "^5.7.1"
   }
 }
-

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 // Routes
 const authRoutes = require('./routes/auth');
@@ -30,6 +31,18 @@ app.use('/api/products', productRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/settings', settingsRoutes);
 
+app.use('/api', (req, res) => {
+  res.status(404).json({ message: 'Route not found.' });
+});
+
+const frontendDistPath = path.join(__dirname, '../../frontend/dist');
+app.use(express.static(frontendDistPath));
+app.get('*', (req, res, next) => {
+  res.sendFile(path.join(frontendDistPath, 'index.html'), (error) => {
+    if (error) next(error);
+  });
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found.' });
@@ -47,4 +60,3 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
-
